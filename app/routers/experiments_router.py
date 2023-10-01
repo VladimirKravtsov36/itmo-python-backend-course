@@ -4,15 +4,15 @@ from typing import Annotated
 from schemas.experiment import Experiment
 from app.fake_db import FAKE_EXPERIMENTS_DB
 
-router = APIRouter()
+experiments_router = APIRouter()
 
 
-@router.get("/ping")
+@experiments_router.get("/ping")
 def ping():
     return "pong"
 
 
-@router.get("/experiments")
+@experiments_router.get("/experiments")
 def show_experiments():
     """
     Return all available experiments
@@ -20,7 +20,7 @@ def show_experiments():
     return FAKE_EXPERIMENTS_DB
 
 
-@router.get("/experiments/{experiment_id}")
+@experiments_router.get("/experiments/{experiment_id}")
 def get_experiment(experiment_id: Annotated[int, Path(ge=0)]):
     """
     Get experiment by id
@@ -31,7 +31,7 @@ def get_experiment(experiment_id: Annotated[int, Path(ge=0)]):
         raise HTTPException(status_code=404, detail="Experiment not found!")
 
 
-@router.post("/experiments")
+@experiments_router.post("/experiments")
 def add_experiment(experiment: Experiment):
     """
     Create a new experiment with all the information:
