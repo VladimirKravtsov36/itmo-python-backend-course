@@ -13,6 +13,15 @@ class DBManager:
 
 class ExperimentsManager(DBManager):
     def create_experiment(self, experiment: Experiment):
+        """
+        Inserts a new experiment into the 'experiments' table in the database.
+
+        Args:
+            experiment (Experiment): An instance of the Experiment class representing the experiment details.
+
+        Returns:
+            dict: A dictionary containing the ID of the newly created experiment.
+        """
         self.cursor.execute(
             """
             INSERT INTO experiments (model_name, task, dataset, metric_name, metric_value)
@@ -28,6 +37,12 @@ class ExperimentsManager(DBManager):
         return {"id": new_experiment_id}
 
     def read_experiments(self):
+        """
+        Retrieves all experiments from the 'experiments' table in the database.
+
+        Returns:
+            list: A list of experiments.
+        """
         self.cursor.execute("SELECT * FROM experiments")
 
         experiments = self.cursor.fetchall()
@@ -36,6 +51,15 @@ class ExperimentsManager(DBManager):
         return experiments
 
     def get_experiment_by_id(self, experiment_id: int):
+        """
+        Retrieves an experiment from the 'experiments' table based on the provided experiment ID.
+
+        Args:
+            experiment_id (int): An integer representing the ID of the experiment.
+
+        Returns:
+            tuple: The experiment details.
+        """
         self.cursor.execute(
             "SELECT * FROM experiments WHERE id = %s;", (experiment_id,)
         )
@@ -47,6 +71,16 @@ class ExperimentsManager(DBManager):
 
 class MetricManager(DBManager):
     def get_metric_for_dataset(self, dataset: str, metric_name: str):
+        """
+        Retrieves experiments from the 'experiments' table based on the provided dataset and metric name.
+
+        Args:
+            dataset (str): A string representing the dataset name.
+            metric_name (str): A string representing the name of the metric.
+
+        Returns:
+            list: A list of experiments.
+        """
         self.cursor.execute(
             """
             SELECT *
@@ -62,6 +96,17 @@ class MetricManager(DBManager):
         return experiments
 
     def get_models_for_task(self, task: str, dataset: str, metric_name: str):
+        """
+        Retrieves experiments from the 'experiments' table based on the provided task, dataset, and metric name.
+
+        Args:
+            task (str): A string representing the task name.
+            dataset (str): A string representing the dataset name.
+            metric_name (str): A string representing the name of the metric.
+
+        Returns:
+            list: A list of experiments.
+        """
         self.cursor.execute(
             """
             SELECT *
