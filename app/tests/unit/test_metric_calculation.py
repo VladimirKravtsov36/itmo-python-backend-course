@@ -3,7 +3,7 @@ import pytest
 from service.metric_calculator import MetricCalculator
 from schemas.experiment import Experiment
 
-# TODO: move to test_db.py
+
 test_experiments = [
     Experiment(
         model_name="ResNet",
@@ -83,13 +83,18 @@ def test_std_metric(dataset, metric_name, expected_result):
 @pytest.mark.parametrize(
     "task, dataset, metric_name, expected_result",
     [
-        ("Image Classification", "ImageNet", "Accuracy", "ViT"),
-        ("Object Detection", "MS COCO", "mAP", "YOLOv8"),
+        (
+            "Image Classification",
+            "ImageNet",
+            "Accuracy",
+            {"metric": 0.88, "model": "ViT"},
+        ),
+        ("Object Detection", "MS COCO", "mAP", {"metric": 0.65, "model": "YOLOv8"}),
         ("NonExistentTask", "NonExistentDataset", "NoneExistentMetric", None),
     ],
 )
 def test_best_model(dataset, task, metric_name, expected_result):
     metric_calculator = MetricCalculator(experiments=test_experiments)
-    best_model = metric_calculator.find_best_model_for_task(task, dataset, metric_name)
+    best_result = metric_calculator.find_best_model_for_task(task, dataset, metric_name)
 
-    assert best_model == expected_result
+    assert best_result == expected_result
