@@ -10,8 +10,6 @@ RUN apt update && apt install make
 
 COPY ./Makefile /code/Makefile
 
-COPY ./app /code/app
-
 ENV PYTHONPATH "${PYTHONPATH}:/code/app"
 
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
