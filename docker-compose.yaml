@@ -1,7 +1,24 @@
 version: "3"
 
 services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: "db"
+      POSTGRES_USER: "pguser"
+      POSTGRES_PASSWORD: "pgpassword"
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data
+      - ./postgres/init-scripts:/docker-entrypoint-initdb.d
+    ports:
+      - 5432:5432
+
   experiment_manager_demo:
     build: .
+    volumes:
+      - ./app:/code/app
     ports:
       - 8080:80
+    depends_on:
+      - db
+    restart: on-failure

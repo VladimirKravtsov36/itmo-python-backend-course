@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class Experiment(BaseModel):
@@ -7,3 +8,9 @@ class Experiment(BaseModel):
     dataset: str
     metric_name: str
     metric_value: float
+
+
+class MetricComputingParams(BaseModel):
+    dataset: str
+    metric_name: str
+    task: Optional[str] = None
