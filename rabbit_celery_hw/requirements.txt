@@ -1,0 +1,6 @@
+celery
+fastapi
+uvicorn
+Pillow
+python-multipart
+redis
