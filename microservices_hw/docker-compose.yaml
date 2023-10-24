@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  storage:
+    build: ./image_storage
+    volumes: 
+      - ./image_storage:/code
+    ports:
+      - 8880:80
+
+  downloader:
+    build: ./downloader
+    volumes:
+      - ./downloader:/code
+    ports:
+      - 8881:81
+
+  facade:
+    build: ./facade
+    volumes: 
+      - ./facade:/code
+      - ./tests:/code/tests
+    ports:
+      - 8882:82
+
+  detector:
+    build: ./detector
+    volumes: 
+      - ./detector:/code
+    ports:
+      - 8883:83

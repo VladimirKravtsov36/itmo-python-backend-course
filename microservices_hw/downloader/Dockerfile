@@ -1,0 +1,8 @@
+FROM python:3.9-slim
+
+COPY ./requirements.txt /code/requirements.txt
+RUN pip install -r /code/requirements.txt
+
+ENV PYTHONPATH "${PYTHONPATH}:/code/:/code/app"
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "81"]
