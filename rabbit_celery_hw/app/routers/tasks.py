@@ -1,11 +1,10 @@
+from celery.result import AsyncResult
 from fastapi import APIRouter, UploadFile
 from fastapi.responses import Response
-from celery.result import AsyncResult
-
 from worker import tasks
 
-
 router = APIRouter()
+
 
 @router.post("/convert_to_gray")
 async def to_gray(image_id: int):

@@ -1,15 +1,13 @@
 import io
 import os
 
-from PIL import Image
-
 from celery import Celery
-
+from PIL import Image
 
 broker_url = os.environ.get("CELERY_BROKER_URL", "pyamqp://guest@rabbitmq:5672//")
 backend_url = os.environ.get("CELERY_BACKEND_URL", "redis://redis:6379")
 
-celery = Celery(__name__, backend="redis://redis:6379", broker=broker_url) 
+celery = Celery(__name__, backend="redis://redis:6379", broker=broker_url)
 
 
 @celery.task(name="image_to_gray")
