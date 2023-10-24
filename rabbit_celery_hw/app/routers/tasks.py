@@ -43,6 +43,4 @@ def get_status(task_id):
     task_result = AsyncResult(task_id, backend=tasks.celery.backend)
     if task_result.status == "SUCCESS":
         return Response(content=task_result.result, media_type="image/png")
-    print(task_result)
-    print(task_result, flush=True)
     return {"status": task_result.status}
